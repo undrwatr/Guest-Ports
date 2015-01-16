@@ -17,15 +17,15 @@ def disable_paging(command="terminal length 0\n", delay=1):
 	time.sleep(delay)
 
 # defines enable  and conf t for logging into the router
-def enable(command1="en\n", command2=cred.password, command3="\n", command4="conf t\n", delay=1):
+def enable(command1="en\n", command2=cred.password, command3="conf t\n", delay=1):
 	remote_conn.send("\n")
 	remote_conn.send(command1)
 	time.sleep(delay)
 	remote_conn.send(command2)
 	time.sleep(delay)
-	remote_conn.send(command3)
+	remote_conn.send("\n")
 	time.sleep(delay)
-	remote_conn.send(command4)
+	remote_conn.send(command3)
 	time.sleep(delay)
 
 # open a file to dump the data in for the sh ip int brief
