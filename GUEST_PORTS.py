@@ -4,7 +4,7 @@ import time
 import os
 import re
 import sys
-# pull in the username and password from a separate file
+# pull in the username and password from a separate file located in the same directory
 import cred 
 
 # takes in the IP Address for the device from the command line
@@ -16,7 +16,7 @@ def disable_paging(command="terminal length 0\n", delay=1):
 	remote_conn.send(command)
 	time.sleep(delay)
 
-# defines enable  and conf t for logging into the router
+# defines enable and conf t for logging into the router
 def enable(command1="en\n", command2=cred.password, command3="conf t\n", delay=1):
 	remote_conn.send("\n")
 	remote_conn.send(command1)
@@ -38,10 +38,11 @@ remote_conn_pre.connect(addr, username=cred.username, password=cred.password, al
 remote_conn = remote_conn_pre.invoke_shell()
 
 disable_paging()
+
 # send the new line to make sure we have a clean line
 #remote_conn.send("\n")
 
-# command to send
+# command to send to get the information for interfaces not changed
 remote_conn.send("sh int | i notconnect|Last input never|Last in.*[1-9]w\n")
 
 # make it seem like a user is there to pause output
@@ -50,6 +51,7 @@ time.sleep(1)
 # pull back the max amount of data possible and put into the data file and then close the file
 int_file.write(remote_conn.recv(65525))
 int_file.close()
+
 #open the file back up and then use it again as a readonly source for the next part
 int_file = open("int_file.txt", "r")
 cmd_file = open("cmd_file.txt", "w")
@@ -67,10 +69,10 @@ for line in int_file:
 cmd_file.close()
 int_file.close()
 
-#run the enable part of the command to get us into the correct mode
+#run the enable part of the command to get us into the correct mode to make some changes
 enable()
 
-#open the command file and then run the next set of commands
+#open the cmd_file.txt and then run commands in that file also write the output of that file to output.txt just to make sure we see what happens
 cmd_file = open("cmd_file.txt", "r")
 output = open("output.txt", "w")
 for line in cmd_file:
