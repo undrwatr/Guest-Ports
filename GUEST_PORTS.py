@@ -44,7 +44,7 @@ disable_paging()
 
 # command to send to get the information for interfaces not changed
 remote_conn.send("sh int | i notconnect|Last input never|Last in.*[1-9]w\n")
-
+ 
 # make it seem like a user is there to pause output
 time.sleep(1)
 
