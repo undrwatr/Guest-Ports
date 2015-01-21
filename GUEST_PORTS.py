@@ -1,13 +1,14 @@
- # import the needed libraries
+# import the needed libraries
 import paramiko
 import time
 import os
 import re
 import sys
-# pull in the username and password from a separate file located in the same directory
+
+# pull in the username and password from a separate file located in the same directory, Need to create if you want to import your username and password
 import cred 
 
-# takes in the IP Address for the device from the command line
+# takes in the IP Address for the device from the command line after the command is called
 addr = sys.argv[1] 
 
 # function defined to turn off terminal length and not require the more command
